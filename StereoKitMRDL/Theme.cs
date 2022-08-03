@@ -1,11 +1,12 @@
 ﻿using System;
 using StereoKit;
 
-namespace StereoKit.Framework
+namespace StereoKit.MRDL
 {
 	public static class HolographicTheme
 	{
-		public static Color ColorScheme = new Color(0.737f, 0.854f, 0.886f);
+		//public static Color ColorScheme = new Color(0.337f, 0.354f, 0.886f);
+		public static Color ColorScheme = new Color(0.12549f, 0.15686f, 0.415686f);
 
 		public static void Apply()
 		{
@@ -13,11 +14,14 @@ namespace StereoKit.Framework
 
 			Vec3 hsv = ColorScheme.ToHSV();
 
-			UI.Settings = new UISettings { padding = 0.008f, gutter = 0.0001f, depth = 0.009f };
+			// Can't set zero gutter... why?
+			UI.Settings = new UISettings { padding = 0.008f, gutter = 0.0000001f, depth = 0.009f };
 
 			Shader uiQuadrantShader = Shader.FromFile("holographic_quadrant.hlsl");
 			Material uiQuadrantMaterial = new Material(uiQuadrantShader);
-			uiQuadrantMaterial[MatParamName.ColorTint] = Color.HSV(hsv.x, hsv.y, hsv.z * 0.95f);// Color.HSV(b.x,b.y*0.6f,b.z*1.4f);
+
+			// Outline color
+			uiQuadrantMaterial[MatParamName.ColorTint] = Color.HSV(hsv.x, hsv.y * 0.7f, hsv.z * 2.9f);// Color.HSV(b.x,b.y*0.6f,b.z*1.4f);
 			Material uiGlassMaterial = new Material(uiQuadrantShader);
 			uiGlassMaterial.Transparency = Transparency.Add;
 			uiGlassMaterial.DepthWrite = false;
@@ -27,9 +31,9 @@ namespace StereoKit.Framework
 			Mesh quadrantCube = Mesh.GenerateCube(Vec3.One);
 			UI.QuadrantSizeMesh(ref quadrantCube);
 
-			Mesh backplate = BackplateMesh(.015f, 6);
-			Mesh backplateSmall = BackplateMesh(.001f, 6);
-			Mesh glassMesh = GlassButtonMesh(.01f, 6);
+			Mesh backplate = BackplateMesh(.015f, 8);
+			Mesh backplateSmall = BackplateMesh(.001f, 8);
+			Mesh glassMesh = GlassButtonMesh(0.009f, 8);
 			UI.SetElementVisual(UIVisual.Default, backplate, uiQuadrantMaterial);
 			UI.SetElementVisual(UIVisual.WindowHead, backplate, uiQuadrantMaterial);
 			UI.SetElementVisual(UIVisual.WindowBody, backplate, uiQuadrantMaterial);
@@ -42,7 +46,8 @@ namespace StereoKit.Framework
 
 			UI.SetThemeColor(UIColor.Primary, ColorScheme);
 
-			UI.SetThemeColor(UIColor.Background, Color.HSV(hsv.x, hsv.y * 0.8f, hsv.z));//Color.HSV(b.x,b.y*0.8f,b.z));
+			UI.SetThemeColor(UIColor.Background, Color.HSV(hsv.x, hsv.y * 1.0f, hsv.z));//Color.HSV(b.x,b.y*0.8f,b.z));
+			UI.SetThemeColor(UIColor.Background, ColorScheme);
 
 			// Button innerquad?
 			// Adjust innerquad brightness with the .z?
