@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="StereoKit" Version="0.3.6" />
+  </ItemGroup>
+
+    <ItemGroup>
+	    <SKShader Include="Assets\holographic_quadrant.hlsl" />
+    </ItemGroup>
+
+</Project>
