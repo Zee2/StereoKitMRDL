@@ -5,11 +5,26 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Assets\mrdl.hlsli" />
+    <None Remove="Assets\mrdl_frontplate.hlsl" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="StereoKit" Version="0.3.6" />
   </ItemGroup>
 
     <ItemGroup>
-	    <SKShader Include="Assets\holographic_quadrant.hlsl" />
+	    <SKShader Include="Assets\mrdl.hlsli" />
+	    <SKShader Include="Assets\mrdl_frontplate.hlsl" />
+	    <SKShader Include="Assets\mrdl_plate.hlsl" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <UpToDateCheckInput Remove="Assets\mrdl_frontplate.hlsl" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <UpToDateCheckInput Remove="Assets\mrdl_plate.hlsl" />
     </ItemGroup>
 
 </Project>

@@ -1,4 +1,5 @@
-#include "stereokit.hlsli"
+
+#include "mrdl.hlsli"
 
 //--name = holographic/quadrant
 //--color:color = .2, .2, .2, 1
@@ -70,14 +71,6 @@ float3 GetIridescence(uint view_id, float3 world_pos, float3 surface_normal) {
 }
 
 float4 ps(psIn input) : SV_TARGET{
-	FingerDist dist = FingerDistanceInfo(input.world.xyz, input.normal);
-
-	const float ring_max_dist = 0.14;
-	const float ring_initial = 0.006;
-	const float ring_grow = 0.03;
-	float glow_amt = saturate(dist.from_finger / ring_max_dist);
-	float glow_radius = ring_initial + glow_amt * ring_grow;
-	float glow = saturate(1 - (dist.on_plane / glow_radius)) * (1 - glow_amt) * input.glow_mask;
 
 	float3 iridescence = GetIridescence(input.view_id, input.world.xyz, input.normal);
 
@@ -85,10 +78,8 @@ float4 ps(psIn input) : SV_TARGET{
 	float  edge = saturate((input.light_edge.a - stroke_thickness) / fwidth(input.light_edge.a));
 
 	float4 col = lerp(color, input.inst_col, edge) * input.inst_col.a;
-	col.rgb = col.rgb * input.light_edge.rgb + iridescence * (0.2 + glow * 8);
-	col.a = max(glow, input.alpha);
-
+	col.rgb = col.rgb * input.light_edge.rgb + iridescence;
+	col.a = input.alpha;
 	col.rgb = col.rgb * col.a;
-
 	return col;
 }

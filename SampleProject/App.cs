@@ -1,10 +1,17 @@
 ﻿using StereoKit;
 using StereoKit.MRDL;
+using StereoKit.HolographicRemoting;
 
 namespace StereoKitApp
 {
 	public class App
 	{
+		// public App()
+        // {
+		// 	SK.PreLoadLibrary();
+		// 	SK.AddStepper(new HolographicRemoting("169.254.142.15"));
+		// }
+
 		public SKSettings Settings => new SKSettings { 
 			appName           = "MRDL Sample",
 			assetsFolder      = "Assets",
@@ -30,11 +37,14 @@ namespace StereoKitApp
 
 		public void Step()
 		{
+			Input.Hand(Handed.Left).Visible = SK.System.displayType == Display.Opaque;
+			Input.Hand(Handed.Right).Visible = SK.System.displayType == Display.Opaque;
+
 			if (SK.System.displayType == Display.Opaque)
 				Default.MeshCube.Draw(floorMaterial, floorTransform);
 
-			MRUI.PlateBegin("Window", ref windowPose);
-			//UI.Text("Note; these buttons have wacky sizing because of an existing Stereokit bug; see #448 on the SK repo! Also, the gutter/padding is messed up on the bottom of windows/panels.");
+			MRUI.PlateBegin("Window", ref windowPose, UIMove.Exact);
+            //UI.Text("Note; these buttons have wacky sizing because of an existing Stereokit bug; see #448 on the SK repo! Also, the gutter/padding is messed up on the bottom of windows/panels.");
 
             MRUI.ActionButton("1", icon);
             UI.SameLine();
@@ -44,10 +54,12 @@ namespace StereoKitApp
             UI.SameLine();
             MRUI.ActionButton("4", icon);
 
-			// TODO: Remove when gutter bug is fixed!
-			UI.Space(0.006f);
+            MRUI.ListButton("Test");
 
-			MRUI.PlateEnd();
+            // TODO: Remove when gutter bug is fixed!
+            UI.Space(0.008f);
+
+            MRUI.PlateEnd();
 		}
 	}
 }

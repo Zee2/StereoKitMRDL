@@ -5,9 +5,9 @@ namespace StereoKit.MRDL
 {
     public static class MRUI
     {
-        public static void PlateBegin(string title, ref Pose platePose)
+        public static void PlateBegin(string title, ref Pose platePose, UIMove moveType = UIMove.FaceUser)
         {
-            UI.WindowBegin(title, ref platePose, UIWin.Body);
+            UI.WindowBegin(title, ref platePose, UIWin.Body, moveType);
         }
 
         public static void PlateEnd() => UI.WindowEnd();

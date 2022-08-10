@@ -17,16 +17,20 @@ namespace StereoKit.MRDL
 			// Can't set zero gutter... why?
 			UI.Settings = new UISettings { padding = 0.008f, gutter = 0.0000001f, depth = 0.009f };
 
-			Shader uiQuadrantShader = Shader.FromFile("holographic_quadrant.hlsl");
-			Material uiQuadrantMaterial = new Material(uiQuadrantShader);
+			
 
-			// Outline color
-			uiQuadrantMaterial[MatParamName.ColorTint] = Color.HSV(hsv.x, hsv.y * 0.7f, hsv.z * 2.9f);// Color.HSV(b.x,b.y*0.6f,b.z*1.4f);
-			Material uiGlassMaterial = new Material(uiQuadrantShader);
+			Shader uiFrontplateShader = Shader.FromFile("mrdl_frontplate.hlsl");
+			Material uiGlassMaterial = new Material(uiFrontplateShader);
 			uiGlassMaterial.Transparency = Transparency.Add;
 			uiGlassMaterial.DepthWrite = false;
 			uiGlassMaterial.QueueOffset = -20;
 			uiGlassMaterial[MatParamName.ColorTint] = Color.White;
+
+			Shader uiBackplateShader = Shader.FromFile("mrdl_plate.hlsl");
+			Material uiQuadrantMaterial = new Material(uiBackplateShader);
+
+			// Outline color
+			uiQuadrantMaterial[MatParamName.ColorTint] = Color.HSV(hsv.x, hsv.y * 0.7f, hsv.z * 2.9f);// Color.HSV(b.x,b.y*0.6f,b.z*1.4f);
 
 			Mesh quadrantCube = Mesh.GenerateCube(Vec3.One);
 			UI.QuadrantSizeMesh(ref quadrantCube);
