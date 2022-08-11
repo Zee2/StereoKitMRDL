@@ -46,7 +46,6 @@ namespace StereoKitApp
 				Default.MeshCube.Draw(floorMaterial, floorTransform);
 
 			MRUI.PlateBegin("Window", ref windowPose, UIMove.Exact);
-            //UI.Text("Note; these buttons have wacky sizing because of an existing Stereokit bug; see #448 on the SK repo! Also, the gutter/padding is messed up on the bottom of windows/panels.");
 
             MRUI.ActionButton("1", icon);
             UI.SameLine();
