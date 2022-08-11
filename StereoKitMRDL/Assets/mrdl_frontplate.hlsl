@@ -58,15 +58,16 @@ psIn vs(vsIn input, uint id : SV_InstanceID) {
 float4 ps(psIn input) : SV_TARGET{
 	//float glow_amt = saturate(dist.from_finger / ring_max_dist);
 	float glow_amt = ProximityLight(input.world.xyz, input.normal, 1.0f);
-	float edge_amt = ProximityLight(input.world.xyz, input.normal, 2.0f, 1.0f);
+	float edge_amt = ProximityLight(input.world.xyz, input.normal, 2.0f);
 
 	const float stroke_thickness = 0.1f;
 	float edge = 1 - saturate((input.light_edge.a - stroke_thickness) / fwidth(input.light_edge.a));
 
 	float4 col = lerp(input.inst_col, color, edge) * input.inst_col.a;
-	col.rgb = col.rgb * input.light_edge.rgb + glow_amt * float3(0.065, 0.018, 0.429) * 4 + edge_amt * edge;
 	col.a = max(max(glow_amt, input.alpha), edge_amt);
-
 	col.rgb = col.rgb * col.a;
+
+	col = col + glow_amt * float4(0.025, 0.058, 0.829, 1.0f) * 5 * input.glow_mask + edge_amt * edge;
+
 	return col;
 }

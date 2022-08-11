@@ -1,6 +1,6 @@
 #include "stereokit.hlsli"
 
-float ProximityLight(float3 world_pos, float3 world_normal, float overallSize, float softness = 0.8)
+float ProximityLight(float3 world_pos, float3 world_normal, float overallSize, float softness = 1.8f)
 {
 	float result = 0.0;
 	for (int i = 0; i < 2; i++) {
@@ -17,11 +17,11 @@ float ProximityLight(float3 world_pos, float3 world_normal, float overallSize, f
 
 		 float fadeFactor = zDist / 0.05f;
 
-		 float blobSize = lerp(0.01f * overallSize, 0.02f * overallSize, zFactor);
+		 float blobSize = lerp(0.025f * overallSize, 0.04f * overallSize, zFactor);
 
 		float blob = (1.0f - saturate(distanceFromProjectedPoint / blobSize));
 
-		float power = lerp(softness, 1, zFactor);
+		float power = lerp(softness, 1.8f, zFactor);
 
 		 float exp_amount = pow(blob, power);
 
