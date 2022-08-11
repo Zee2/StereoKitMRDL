@@ -1,6 +1,6 @@
 #include "mrdl.hlsli"
 
-//--name = holographic/quadrant
+//--name = mrdl_frontplate
 //--color:color = .2, .2, .2, 1
 
 float4 color;
@@ -47,7 +47,7 @@ psIn vs(vsIn input, uint id : SV_InstanceID) {
 	o.normal = normalize(mul(input.norm, (float3x3)world_mat));
 
 	o.inst_col = sk_inst[id].color;
-	o.light_edge.rgb = Lighting(o.normal);
+	o.light_edge.rgb = float3(1, 1, 1);
 	o.light_edge.a = input.color.a;
 	o.alpha = input.color.b > 0.5 ? 1 : (o.inst_col.a - 1) * 0.5;
 	o.glow_mask = input.color.g;
@@ -56,23 +56,16 @@ psIn vs(vsIn input, uint id : SV_InstanceID) {
 }
 
 float4 ps(psIn input) : SV_TARGET{
-	float proxFactor = ProximityLight(input.world.xyz, input.normal);
-
-	const float ring_max_dist = 0.14;
-	const float ring_initial = 0.006;
-	const float ring_grow = 0.03;
 	//float glow_amt = saturate(dist.from_finger / ring_max_dist);
-	float glow_amt = proxFactor;
-	float glow_radius = ring_initial + glow_amt * ring_grow;
-	//float glow = saturate(1 - (dist.on_plane / glow_radius)) * (1 - glow_amt) * input.glow_mask;
-	float glow = glow_amt;
+	float glow_amt = ProximityLight(input.world.xyz, input.normal, 1.0f);
+	float edge_amt = ProximityLight(input.world.xyz, input.normal, 2.0f, 1.0f);
 
 	const float stroke_thickness = 0.1f;
-	float  edge = saturate((input.light_edge.a - stroke_thickness) / fwidth(input.light_edge.a));
+	float edge = 1 - saturate((input.light_edge.a - stroke_thickness) / fwidth(input.light_edge.a));
 
-	float4 col = lerp(color, input.inst_col, edge) * input.inst_col.a;
-	col.rgb = col.rgb * input.light_edge.rgb + glow * float3(0.065, 0.018, 0.429) * 4;
-	col.a = max(glow, input.alpha);
+	float4 col = lerp(input.inst_col, color, edge) * input.inst_col.a;
+	col.rgb = col.rgb * input.light_edge.rgb + glow_amt * float3(0.065, 0.018, 0.429) * 4 + edge_amt * edge;
+	col.a = max(max(glow_amt, input.alpha), edge_amt);
 
 	col.rgb = col.rgb * col.a;
 	return col;

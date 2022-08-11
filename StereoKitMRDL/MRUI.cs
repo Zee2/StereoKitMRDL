@@ -16,7 +16,7 @@ namespace StereoKit.MRDL
         {
             // ButtonImg doesn't respect size arg! StereoKit/#448
             // This says 0.016 but actually renders closer to 0.032....
-            return UI.ButtonImg(text, icon, UIBtnLayout.CenterNoText, new Vec2(0.016f, 0.016f));
+            return UI.ButtonImg(text, icon, UIBtnLayout.CenterNoText, new Vec2(0.032f, 0.032f));
         }
 
         public static bool ListButton(string text)
@@ -28,7 +28,7 @@ namespace StereoKit.MRDL
         {
             // ButtonImg doesn't respect size arg! StereoKit/#448
             // This says 0.016 but actually renders closer to 0.032....
-            return UI.ButtonImg(text, icon, UIBtnLayout.Left, new Vec2(0.128f, 0.016f));
+            return UI.ButtonImg(text, icon, UIBtnLayout.Left, new Vec2(0.128f, 0.032f));
         }
     }
 }

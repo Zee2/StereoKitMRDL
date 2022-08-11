@@ -40,6 +40,8 @@ namespace StereoKitApp
 			Input.Hand(Handed.Left).Visible = SK.System.displayType == Display.Opaque;
 			Input.Hand(Handed.Right).Visible = SK.System.displayType == Display.Opaque;
 
+			HolographicTheme.Apply();
+
 			if (SK.System.displayType == Display.Opaque)
 				Default.MeshCube.Draw(floorMaterial, floorTransform);
 
@@ -54,10 +56,11 @@ namespace StereoKitApp
             UI.SameLine();
             MRUI.ActionButton("4", icon);
 
-            MRUI.ListButton("Test");
+            MRUI.ListButton("Test1");
+			MRUI.ListButton("Test2", icon);
 
-            // TODO: Remove when gutter bug is fixed!
-            UI.Space(0.008f);
+			// TODO: Remove when gutter bug is fixed!
+			UI.Space(0.008f);
 
             MRUI.PlateEnd();
 		}

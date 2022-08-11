@@ -30,7 +30,7 @@ namespace StereoKit.MRDL
 			Material uiQuadrantMaterial = new Material(uiBackplateShader);
 
 			// Outline color
-			uiQuadrantMaterial[MatParamName.ColorTint] = Color.HSV(hsv.x, hsv.y * 0.7f, hsv.z * 2.9f);// Color.HSV(b.x,b.y*0.6f,b.z*1.4f);
+			uiQuadrantMaterial[MatParamName.ColorTint] = Color.HSV(hsv.x, hsv.y * 0.9f, hsv.z * 3.9f);// Color.HSV(b.x,b.y*0.6f,b.z*1.4f);
 
 			Mesh quadrantCube = Mesh.GenerateCube(Vec3.One);
 			UI.QuadrantSizeMesh(ref quadrantCube);
@@ -55,7 +55,7 @@ namespace StereoKit.MRDL
 
 			// Button innerquad?
 			// Adjust innerquad brightness with the .z?
-			UI.SetThemeColor(UIColor.Common, Color.HSV(hsv.x, hsv.y * 0.5f, hsv.z * 0.4f, 1.0f));//Color.HSV(b.x,b.y*0.6f,b.z*1.2f));
+			UI.SetThemeColor(UIColor.Common, Color.HSV(hsv.x, hsv.y * 0.9f, hsv.z * 0.8f, 1.0f));//Color.HSV(b.x,b.y*0.6f,b.z*1.2f));
 
 			ApplyLighting();
 		}

@@ -1,7 +1,7 @@
 
 #include "mrdl.hlsli"
 
-//--name = holographic/quadrant
+//--name = mrdl_plate
 //--color:color = .2, .2, .2, 1
 
 float4 color;
